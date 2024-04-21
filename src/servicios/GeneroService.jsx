@@ -1,13 +1,13 @@
 import { axiosConfig } from "../configuraciones/axiosConfig"
 
-const obtenerGeneros  = () =>{
-    return axiosConfig.get('gener?estsdo=true',{
+const obtenerGeneros  = (estado = true) =>{
+    return axiosConfig.get('gener?estsdo= '+estado,{
         Headers : {
             'Content-type' : 'aplication/json'
         }
     })
   }
-
+  
 export{
     obtenerGeneros
 }
