@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { axiosConfig } from '../../configuraciones/axiosConfig'
 import { obtenerGeneros } from '../../servicios/GeneroService'
 
@@ -8,20 +8,52 @@ export default function Genero() {
     obtenerTodos()
   }, [])
 
+  const [genero, setGeneros] = useState([])
+
   const obtenerTodos = async () => {
     try {
-      const data = await obtenerGeneros()
-      console.log(data)
+      const { data } = await obtenerGeneros()
+      setGeneros(data)
     }
-    catch(e) {
+    catch (e) {
       console.error(e)
     }
   }
 
   return (
-    <div>_________________________
-      Aquí estan los géneros
-      ________________________
+    <div>_
+      <table className="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Creado</th>
+            <th scope="col">Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            genero.map((genero, index) => {
+              return (
+              <tr>
+                <th scope="row">{index+1}</th>
+                <td>{genero.nombre}</td>
+                <td>{genero.descripcion}</td>
+                <td>{genero.fechaCreacion}</td>
+                <td>
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked={genero.estado} />
+                    <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
+                  </div>
+                </td>
+              </tr>)
+            })
+          }
+        </tbody>
+      </table>
     </div>
   )
 }
+export {
+  Genero}
